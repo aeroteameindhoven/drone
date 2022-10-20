@@ -1,0 +1,26 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/docker-existing-dockerfile
+{
+    "name": "ROS Development Environment",
+    "image": "ghcr.io/aeroteameindhoven/ros-devenv:main",
+
+    "extensions": [
+        "mutantdino.resourcemonitor",
+        "ms-vscode.cpptools-extension-pack"
+    ],
+
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/dev/workspace/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+    "workspaceFolder": "/home/dev/workspace/${localWorkspaceFolderBasename}",
+
+    "containerEnv": {
+        // X11 Forwarding
+        "DISPLAY": "${localEnv:DISPLAY}"
+    },
+
+    "mounts": [
+        // X11 Forwarding
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+        // Intel GPU Forwarding
+        "source=/dev/dri,target=/dev/dri,type=bind"
+    ]
+}
