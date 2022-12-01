@@ -3,17 +3,18 @@
     <!-- MAVROS posix SITL environment launch script -->
     <!-- launches MAVROS, PX4 SITL, Gazebo environment, and spawns vehicle -->
     <!-- vehicle pose -->
-    <arg name="x" default="10"/>
-    <arg name="y" default="10"/>
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
     <arg name="z" default="0"/>
     <arg name="R" default="0"/>
     <arg name="P" default="0"/>
     <arg name="Y" default="0"/>
     <!-- vehicle model and world -->
     <arg name="est" default="ekf2"/>
-    <arg name="vehicle" default="iris_rplidar"/>
-    <arg name="world" default="$(find bluejay_gazebo)/worlds/willowgarage.world"/>
-    <arg name="sdf" default="$(find bluejay_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
+    <arg name="vehicle" default="iris"/>
+    <arg name="world" default="$(find px4)/Tools/simulation/gazebo/sitl_gazebo/worlds/empty.world"/>
+    <arg name="sdf" default="$(find aero_gazebo)models/$(arg vehicle)/$(arg vehicle).sdf"/>
+
 
     <!-- gazebo configs -->
     <arg name="gui" default="true"/>
@@ -24,7 +25,7 @@
     <!-- MAVROS configs -->
     <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
     <arg name="respawn_mavros" default="false"/>
-    <arg name="config_yaml" default="$(find bluejay_gazebo)/resource/px4_config.yaml" />
+    <arg name="config_yaml" default="$(find aero_gazebo)/resource/px4_config.yaml" />
     <arg name="gcs_url" default="" />   <!-- GCS link is provided by SITL -->
     <arg name="tgt_system" default="1" />
     <arg name="tgt_component" default="1" />
