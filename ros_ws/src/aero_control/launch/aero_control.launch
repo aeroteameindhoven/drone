@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="aero_control" pkg="aero_control" type="aero_control" output="screen"/>
+</launch>
