@@ -14,6 +14,7 @@ public:
 
 private:
     ros::NodeHandle core;
+    ros::NodeHandle nh;
 
     mavros_msgs::State current_state;
     mavros_msgs::SetMode set_mode;

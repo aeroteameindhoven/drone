@@ -1,7 +1,6 @@
 #include "aero_control/offb_controller_node.h"
 
 
-
 void OffBControllerNode::StateCallback (const mavros_msgs::State::ConstPtr& msg){
     current_state = *msg;
 }
@@ -16,21 +15,20 @@ void OffBControllerNode::LandingCallback (const geometry_msgs::PoseStamped::Cons
 
 OffBControllerNode::OffBControllerNode()
 {
-    ros::NodeHandle nh;
 
-    ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
-            ("mavros/state", 10, &OffBControllerNode::StateCallback);
-    ros::Subscriber takeoff_sub = nh.subscribe<geometry_msgs::PoseStamped>
-            ("aero_takeoff/takeoff", 10, &OffBControllerNode::TakeOffCallback);
-    ros::Subscriber landing_sub = nh.subscribe<geometry_msgs::PoseStamped>
-            ("aero_landing/landing", 10, &OffBControllerNode::LandingCallback);
+    ros::Subscriber state_sub = core.subscribe<mavros_msgs::State>
+            ("mavros/state", 10, &OffBControllerNode::StateCallback, this);
+    ros::Subscriber takeoff_sub = core.subscribe<geometry_msgs::PoseStamped>
+            ("aero_takeoff/takeoff", 10, &OffBControllerNode::TakeOffCallback, this);
+    ros::Subscriber landing_sub = core.subscribe<geometry_msgs::PoseStamped>
+            ("aero_landing/landing", 10, &OffBControllerNode::LandingCallback, this);
 
-    ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
+    ros::Publisher local_pos_pub = core.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
 
-    ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>
+    ros::ServiceClient arming_client = core.serviceClient<mavros_msgs::CommandBool>
             ("mavros/cmd/arming");
-    ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
+    ros::ServiceClient set_mode_client = core.serviceClient<mavros_msgs::SetMode>
             ("mavros/set_mode");
 
     //the setpoint publishing rate MUST be faster than 2Hz
@@ -89,3 +87,11 @@ OffBControllerNode::OffBControllerNode()
 
 }
 
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "offboard_node");
+    new OffBControllerNode();
+    ros::spin();
+
+    return 0;
+}
