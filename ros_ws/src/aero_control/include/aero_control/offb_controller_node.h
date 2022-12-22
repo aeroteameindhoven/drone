@@ -22,6 +22,8 @@ private:
 
     //subscriber
     ros::Subscriber state_sub;
+    ros::Subscriber takeoff_sub;
+    ros::Subscriber landing_sub;
 
     //publisher
     ros::Publisher local_pos_pub;
@@ -31,7 +33,8 @@ private:
     ros::ServiceClient set_mode_client;
 
     void StateCallback(const mavros_msgs::State::ConstPtr& msg);
+    void TakeOffCallback(const geometry_msgs::PoseStamped::ConstPtr& msg);
+    void LandingCallback(const geometry_msgs::PoseStamped::ConstPtr& msg);
 
-
-
+};
 #endif

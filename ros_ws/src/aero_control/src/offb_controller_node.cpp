@@ -1,24 +1,33 @@
-/**
- * @file offb_node.cpp
- * @brief Offboard control example node, written with MAVROS version 0.19.x, PX4 Pro Flight
- * Stack and tested in Gazebo SITL
- */
+#include "aero_control/offb_controller_node.h"
 
 
-mavros_msgs::State current_state;
-void state_cb(const mavros_msgs::State::ConstPtr& msg){
+
+void OffBControllerNode::StateCallback (const mavros_msgs::State::ConstPtr& msg){
     current_state = *msg;
 }
 
-int main(int argc, char **argv)
+void OffBControllerNode::TakeOffCallback (const geometry_msgs::PoseStamped::ConstPtr& msg){
+    setPosition = *msg;
+}
+
+void OffBControllerNode::LandingCallback (const geometry_msgs::PoseStamped::ConstPtr& msg){
+    setPosition = *msg;
+}
+
+OffBControllerNode::OffBControllerNode()
 {
-    ros::init(argc, argv, "offb_node");
     ros::NodeHandle nh;
 
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
-            ("mavros/state", 10, state_cb);
+            ("mavros/state", 10, &OffBControllerNode::StateCallback);
+    ros::Subscriber takeoff_sub = nh.subscribe<geometry_msgs::PoseStamped>
+            ("aero_takeoff/takeoff", 10, &OffBControllerNode::TakeOffCallback);
+    ros::Subscriber landing_sub = nh.subscribe<geometry_msgs::PoseStamped>
+            ("aero_landing/landing", 10, &OffBControllerNode::LandingCallback);
+
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
+
     ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>
             ("mavros/cmd/arming");
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
@@ -78,6 +87,5 @@ int main(int argc, char **argv)
         rate.sleep();
     }
 
-    return 0;
 }
 
