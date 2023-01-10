@@ -7,7 +7,8 @@
     "extensions": [
 		"mutantdino.resourcemonitor",
 		"ms-vscode.cpptools-extension-pack",
-		"betwo.b2-catkin-tools"
+		"betwo.b2-catkin-tools",
+		"eamodio.gitlens"
 	],
 
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/dev/workspace/${localWorkspaceFolderBasename},type=bind,consistency=cached",
