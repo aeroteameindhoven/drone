@@ -1,6 +1,0 @@
-aero_control
-/home/dev/workspace/drone/devel/.private/aero_control/cmake.lock /home/dev/workspace/drone/devel/./cmake.lock
-/home/dev/workspace/drone/devel/.private/aero_control/share/aero_control/cmake/aero_controlConfig.cmake /home/dev/workspace/drone/devel/share/aero_control/cmake/aero_controlConfig.cmake
-/home/dev/workspace/drone/devel/.private/aero_control/share/aero_control/cmake/aero_controlConfig-version.cmake /home/dev/workspace/drone/devel/share/aero_control/cmake/aero_controlConfig-version.cmake
-/home/dev/workspace/drone/devel/.private/aero_control/lib/aero_control/aero_control /home/dev/workspace/drone/devel/lib/aero_control/aero_control
-/home/dev/workspace/drone/devel/.private/aero_control/lib/pkgconfig/aero_control.pc /home/dev/workspace/drone/devel/lib/pkgconfig/aero_control.pc

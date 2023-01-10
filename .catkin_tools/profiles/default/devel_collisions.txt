@@ -1,2 +1,0 @@
-/home/dev/workspace/drone/ros_ws/devel/./cmake.lock 60
-/home/dev/workspace/drone/devel/./cmake.lock 2

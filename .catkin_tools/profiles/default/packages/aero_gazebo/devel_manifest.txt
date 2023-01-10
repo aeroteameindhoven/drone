@@ -1,5 +1,0 @@
-aero_gazebo
-/home/dev/workspace/drone/devel/.private/aero_gazebo/cmake.lock /home/dev/workspace/drone/devel/./cmake.lock
-/home/dev/workspace/drone/devel/.private/aero_gazebo/share/aero_gazebo/cmake/aero_gazeboConfig-version.cmake /home/dev/workspace/drone/devel/share/aero_gazebo/cmake/aero_gazeboConfig-version.cmake
-/home/dev/workspace/drone/devel/.private/aero_gazebo/share/aero_gazebo/cmake/aero_gazeboConfig.cmake /home/dev/workspace/drone/devel/share/aero_gazebo/cmake/aero_gazeboConfig.cmake
-/home/dev/workspace/drone/devel/.private/aero_gazebo/lib/pkgconfig/aero_gazebo.pc /home/dev/workspace/drone/devel/lib/pkgconfig/aero_gazebo.pc
