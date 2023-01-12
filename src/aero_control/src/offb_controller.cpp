@@ -1,27 +1,27 @@
-#include "aero_control/offb_controller_node.h"
+#include "aero_control/offb_controller.h"
 
 
-void OffBControllerNode::StateCallback (const mavros_msgs::State::ConstPtr& msg){
-    current_state = *msg;
+void OffBController::StateCallback (const mavros_msgs::State::ConstPtr& msg){
+    currentState = *msg;
 }
 
-void OffBControllerNode::TakeOffCallback (const geometry_msgs::PoseStamped::ConstPtr& msg){
+void OffBController::TakeOffCallback (const geometry_msgs::PoseStamped::ConstPtr& msg){
     setPosition = *msg;
 }
 
-void OffBControllerNode::LandingCallback (const geometry_msgs::PoseStamped::ConstPtr& msg){
+void OffBController::LandingCallback (const geometry_msgs::PoseStamped::ConstPtr& msg){
     setPosition = *msg;
 }
 
-OffBControllerNode::OffBControllerNode()
+OffBController::OffBController()
 {
 
     ros::Subscriber state_sub = core.subscribe<mavros_msgs::State>
-            ("mavros/state", 10, &OffBControllerNode::StateCallback, this);
+            ("mavros/state", 10, &OffBController::StateCallback, this);
     ros::Subscriber takeoff_sub = core.subscribe<geometry_msgs::PoseStamped>
-            ("aero_takeoff/takeoff", 10, &OffBControllerNode::TakeOffCallback, this);
+            ("aero_takeoff/takeoff", 10, &OffBController::TakeOffCallback, this);
     ros::Subscriber landing_sub = core.subscribe<geometry_msgs::PoseStamped>
-            ("aero_landing/landing", 10, &OffBControllerNode::LandingCallback, this);
+            ("aero_landing/landing", 10, &OffBController::LandingCallback, this);
 
     ros::Publisher local_pos_pub = core.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
@@ -35,7 +35,7 @@ OffBControllerNode::OffBControllerNode()
     ros::Rate rate(20.0);
 
     // wait for FCU connection
-    while(ros::ok() && !current_state.connected){
+    while(ros::ok() && !currentState.connected){
         ros::spinOnce();
         rate.sleep();
     }
@@ -52,30 +52,30 @@ OffBControllerNode::OffBControllerNode()
         rate.sleep();
     }
 
-    mavros_msgs::SetMode offb_set_mode;
-    offb_set_mode.request.custom_mode = "OFFBOARD";
+    mavros_msgs::SetMode offbSetMode;
+    offbSetMode.request.custom_mode = "OFFBOARD";
 
-    mavros_msgs::CommandBool arm_cmd;
-    arm_cmd.request.value = true;
+    mavros_msgs::CommandBool armCmd;
+    armCmd.request.value = true;
 
-    ros::Time last_request = ros::Time::now();
+    ros::Time lastRequest = ros::Time::now();
 
     while(ros::ok()){
-        if( current_state.mode != "OFFBOARD" &&
-            (ros::Time::now() - last_request > ros::Duration(5.0))){
-            if( set_mode_client.call(offb_set_mode) &&
-                offb_set_mode.response.mode_sent){
+        if( currentState.mode != "OFFBOARD" &&
+            (ros::Time::now() - lastRequest > ros::Duration(5.0))){
+            if( set_mode_client.call(offbSetMode) &&
+                offbSetMode.response.mode_sent){
                 ROS_INFO("Offboard enabled");
             }
-            last_request = ros::Time::now();
+            lastRequest = ros::Time::now();
         } else {
-            if( !current_state.armed &&
-                (ros::Time::now() - last_request > ros::Duration(5.0))){
-                if( arming_client.call(arm_cmd) &&
-                    arm_cmd.response.success){
+            if( !currentState.armed &&
+                (ros::Time::now() - lastRequest > ros::Duration(5.0))){
+                if( arming_client.call(armCmd) &&
+                    armCmd.response.success){
                     ROS_INFO("Vehicle armed");
                 }
-                last_request = ros::Time::now();
+                lastRequest = ros::Time::now();
             }
         }
 
@@ -90,7 +90,7 @@ OffBControllerNode::OffBControllerNode()
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "offboard_node");
-    new OffBControllerNode();
+    new OffBController();
     ros::spin();
 
     return 0;

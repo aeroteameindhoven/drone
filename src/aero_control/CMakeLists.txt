@@ -35,7 +35,7 @@ include_directories(
   ~/workspace/drone/ros_ws/devel/include
 )
 
-add_executable(aero_control src/offb_controller_node.cpp)
+add_executable(aero_control src/offb_controller.cpp)
 add_dependencies(aero_control ${PROJECT_NAME})
 target_link_libraries(aero_control ${catkin_LIBRARIES})
 

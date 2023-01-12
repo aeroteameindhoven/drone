@@ -1,5 +1,5 @@
-#ifndef OFFB_CONTROLLER_NODE_H
-#define OFFB_CONTROLLER_NODE_H
+#ifndef OFFB_CONTROLLER_H
+#define OFFB_CONTROLLER_H
 
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -7,19 +7,19 @@
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/State.h>
 
-class OffBControllerNode{
+class OffBController{
 public:
-    OffBControllerNode();
+    OffBController();
     void Init_Parameters();
 
 private:
     ros::NodeHandle core;
     ros::NodeHandle nh;
 
-    mavros_msgs::State current_state;
-    mavros_msgs::SetMode set_mode;
+    mavros_msgs::State currentState;
+    mavros_msgs::SetMode setMode;
     geometry_msgs::PoseStamped setPosition;
-    mavros_msgs::CommandBool arm_cmd;
+    mavros_msgs::CommandBool armCmd;
 
     //subscriber
     ros::Subscriber state_sub;
