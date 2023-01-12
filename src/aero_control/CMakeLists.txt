@@ -32,7 +32,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ~/workspace/drone/ros_ws/devel/include
+  ~/workspace/drone/devel/include
 )
 
 add_executable(aero_control src/offb_controller.cpp)
